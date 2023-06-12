@@ -32,7 +32,7 @@ sequelize.define<UserInstance>('User', {
                 allowNull: true
             },
             date: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: true
             },
             gender: {
