@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
+import User from './models/User';
 
 dotenv.config();
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
@@ -8,6 +9,8 @@ const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}
     logging: false,
     native: false
 });
+
+User(sequelize)
 
 export default sequelize;
 
