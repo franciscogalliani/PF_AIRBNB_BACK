@@ -1,12 +1,11 @@
-import sequelize from '../db';
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { UserAttributes } from './Interfaces';
 
 interface UserInstance extends Model<UserAttributes>, UserAttributes {}
 
 const User = (sequelize: Sequelize) => {
-sequelize.define<UserInstance>('User', {
-            id: {
+    sequelize.define<UserInstance>('User', {
+            id_usuario: {
                 primaryKey: true,
                 type: DataTypes.STRING,
                 allowNull: false
@@ -49,13 +48,10 @@ sequelize.define<UserInstance>('User', {
             },
             is_active: {
                 type: DataTypes.BOOLEAN,
-                allowNull: false
+                allowNull: false,
+                defaultValue: true
             }
-        },
-        {
-            timestamps: false
-        }
-        )
+        })
     }
 
 export default User

@@ -1,8 +1,13 @@
 import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 import User from './models/User';
+
 import Rating from './models/Rating';
 import Rent from './models/Rent';
+
+
+import Property from './models/Property';
+import Service from './models/Service';
 
 
 dotenv.config();
@@ -13,9 +18,15 @@ const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}
     native: false
 });
 
+
 User(sequelize)
 Rating(sequelize)
 Rent(sequelize);
+
+
+User(sequelize);
+Property(sequelize);
+Service(sequelize);
 
 
 export default sequelize;
