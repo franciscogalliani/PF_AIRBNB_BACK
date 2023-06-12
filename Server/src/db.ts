@@ -12,3 +12,6 @@ const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}
 export default sequelize;
 
 // test
+
+// Test
+
