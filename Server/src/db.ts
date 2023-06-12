@@ -21,7 +21,6 @@ const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}
 User(sequelize)
 Rating(sequelize)
 Rent(sequelize);
-User(sequelize);
 Property(sequelize);
 Service(sequelize);
 
