@@ -32,7 +32,6 @@ export interface RentAttributes {
     Payment_date: Date
     creation_date: Date
     active : boolean
-
      }
 
 export interface PropertyAttributes {
