@@ -1,5 +1,5 @@
 import { Router } from "express";
-import propertyRoutes from "./propertyRoutes";
+import propertyRoutes from "./propertyRoutes/propertyRoutes";
 
 const router: Router = Router();
 
