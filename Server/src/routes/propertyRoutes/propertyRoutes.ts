@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { getAllPropHandler, getPropById, createPropHandler } from '../../handlers/propertyHandlers';
+import { getAllPropHandler, getPropByIdHandler, createPropHandler } from './handlers/propertyHandlers';
 
 const propertyRoutes = Router();
 
 propertyRoutes.get('/', getAllPropHandler);
 
-propertyRoutes.get('/:id', getPropById);
+propertyRoutes.get('/:id', getPropByIdHandler);
 
 propertyRoutes.post('/', createPropHandler);
 
