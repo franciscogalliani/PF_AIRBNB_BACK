@@ -1,8 +1,11 @@
 import { Router } from "express";
-import propertyRoutes from "./propertyRoutes/propertyRoutes";
+import usersRouter from "./usersRouter/usersRouter";
+
+
 
 const router: Router = Router();
 
-router.use('/property', propertyRoutes);
+router.use('/users', usersRouter)
+
 
 export default router;
