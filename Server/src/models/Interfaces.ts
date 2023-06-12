@@ -12,7 +12,6 @@ export interface UserAttributes {
     is_active: boolean
 }
 
-
 export interface RatingAttributes {
     rating_id: number
     total_rating: number
@@ -23,7 +22,6 @@ export interface RatingAttributes {
     description_rating?: string
     date_rating: Date
 }
-
 
 export interface RentAttributes {
     rent_id: number
@@ -36,7 +34,6 @@ export interface RentAttributes {
     active : boolean
 
      }
-
 
 export interface PropertyAttributes {
     id_property: number
