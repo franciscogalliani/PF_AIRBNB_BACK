@@ -5,4 +5,6 @@ const router: Router = Router();
 
 router.use('/users', usersRouter);
 
+router.use('/property', propertyRoutes);
+
 export default router;
