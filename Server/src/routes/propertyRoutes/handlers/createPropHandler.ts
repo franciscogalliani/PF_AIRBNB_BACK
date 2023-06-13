@@ -32,6 +32,7 @@ const createPropHandler = async(req: Request, res: Response) => {
     const result: string|boolean = formBodyCheck(propertiesArray, req.body)
 
     const newProperty = req.body as PropertyAttributes
+    
     try {
         if(result === true){
             const response = await createPropController(newProperty)

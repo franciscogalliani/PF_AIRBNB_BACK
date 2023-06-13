@@ -1,13 +1,13 @@
 import { Op } from 'sequelize'
 import  sequalize  from '../../../db'
 
-const { Property, Rating, Service } = sequalize.models
+const { Properties, Ratings, Services } = sequalize.models
 
 const getAllPropsController = async (name: string | void) => {
     if(name){
-        const response = await Property.findAll({
+        const response = await Properties.findAll({
             include: {
-                model: Service,
+                model: Services,
                 attributes: ['name'],
                 through: {
                     attributes: []
@@ -21,9 +21,9 @@ const getAllPropsController = async (name: string | void) => {
             return response
         } return 'No hay propiedades con ese nombre'
     }
-    const response = await Property.findAll({
+    const response = await Properties.findAll({
         include: {
-            model: Service,
+            model: Services,
             attributes: ['name'],
             through: {
                 attributes: []

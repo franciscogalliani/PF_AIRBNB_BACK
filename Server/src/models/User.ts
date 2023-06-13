@@ -8,6 +8,7 @@ const User = (sequelize: Sequelize) => {
 
 
 
+
         id_user: {
             primaryKey: true,
             type: DataTypes.STRING,
@@ -56,6 +57,7 @@ const User = (sequelize: Sequelize) => {
         }
     })
 }
+
 
 export default User
 

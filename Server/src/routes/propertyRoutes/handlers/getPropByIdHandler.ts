@@ -9,6 +9,7 @@ const getPropByIdHandler = async (req: Request, res: Response) => {
     try {
         if(id){
             const propById = await getPropById(numberId)
+            console.log(propById);
             res.status(200).json(propById)
         }
     } catch (error) {

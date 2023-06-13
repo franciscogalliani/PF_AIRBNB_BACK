@@ -11,6 +11,13 @@ const Property = (sequelize: Sequelize) => {
             autoIncrement: true,
             allowNull: false
         },
+        id_user: {
+            type: DataTypes.STRING,
+            references: {
+                model: 'Users',
+                key: 'id_user'
+            }
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false

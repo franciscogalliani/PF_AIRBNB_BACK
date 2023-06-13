@@ -36,6 +36,7 @@ export interface RentAttributes {
 
 export interface PropertyAttributes {
     id_property: number
+    id_user: string
     title: string
     province: string
     location: string
