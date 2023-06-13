@@ -2,7 +2,11 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import router from './routes';
+
 import fileUpload from "express-fileupload";
+
+
+
 
 
 
@@ -28,9 +32,11 @@ server.use((req: Request, res: Response, next: NextFunction): void => {
     next();
 });
 server.use(fileUpload({
+
     useTempFiles: true,
     tempFileDir: '/tmp/'
 }));
+
 
 
 
