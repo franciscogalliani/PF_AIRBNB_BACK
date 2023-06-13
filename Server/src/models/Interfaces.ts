@@ -1,5 +1,5 @@
 export interface UserAttributes {
-    id_usuario: string
+    id_user: string
     name?: string
     surname?: string
     email: string
@@ -36,6 +36,7 @@ export interface RentAttributes {
 
 export interface PropertyAttributes {
     id_property: number
+    id_user: string
     title: string
     province: string
     location: string

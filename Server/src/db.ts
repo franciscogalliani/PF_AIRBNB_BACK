@@ -28,6 +28,9 @@ const { Properties, Ratings, Rents, Services, Users } = sequelize.models;
 Services.belongsToMany(Properties, { through: 'Property_Services' });
 Properties.belongsToMany(Services, { through: 'Property_Services' });
 
+Users.hasMany(Properties, { foreignKey: 'id_usuario' });
+Properties.belongsTo(Users, { foreignKey: 'id_usuario' });
+
 
 
 export default sequelize;
