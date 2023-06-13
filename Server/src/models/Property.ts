@@ -27,6 +27,10 @@ const Property = (sequelize: Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        zip_code: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         property_type: {
             type: DataTypes.ENUM('House', 'Apartment', 'Room'),
             allowNull: false
@@ -53,8 +57,12 @@ const Property = (sequelize: Sequelize) => {
             allowNull: false,
             defaultValue: 0
         },
-        availability: {
-            type: DataTypes.ARRAY(DataTypes.DATEONLY),
+        start_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
+        },
+        end_date: {
+            type: DataTypes.DATEONLY,
             allowNull: false
         },
         is_active: {
@@ -76,10 +84,6 @@ const Property = (sequelize: Sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
-        },
-        beds_type: {
-            type: DataTypes.ARRAY(DataTypes.JSONB),
-            allowNull: true
         },
         max_guests: {
             type: DataTypes.INTEGER,

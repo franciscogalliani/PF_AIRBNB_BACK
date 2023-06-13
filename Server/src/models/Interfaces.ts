@@ -40,13 +40,15 @@ export interface PropertyAttributes {
     province: string
     location: string
     address: string
+    zip_code: string
     property_type: 'House' | 'Apartment' | 'Room'
     description: string
     price_per_night: number
     images: string[]
     rating: number
     ratings_amount: number
-    availability: Date[]
+    start_date: Date
+    end_date: Date
     is_active: boolean
     rooms_number: number
     bathrooms_number?: number
@@ -69,5 +71,4 @@ export interface ServiceAttributes {
     service_id: number
     name: string
     icon: string
-
 }
