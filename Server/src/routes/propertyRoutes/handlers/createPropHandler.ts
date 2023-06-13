@@ -6,6 +6,7 @@ import formBodyCheck from "../../../controllers/checkFormProps";
 
 const createPropHandler = async(req: Request, res: Response) => {
     const propertiesArray: string[] = [
+        "id_user",
         "title",
         "province",
         "location",
