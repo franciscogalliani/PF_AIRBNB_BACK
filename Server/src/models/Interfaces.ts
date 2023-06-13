@@ -60,12 +60,6 @@ export interface PropertyAttributes {
     min_nights: number
 }
 
-interface BedsType {
-    name: string    
-    amount: number
-    room: number
-}
-
 export interface ServiceAttributes {
     service_id: number
     name: string
