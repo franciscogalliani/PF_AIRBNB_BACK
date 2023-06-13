@@ -1,10 +1,6 @@
-const getAllPropsController = (name: string | void) => {
-    if(name){
-        const response = `axios de ${name}`
-        return response
-    }
-    const response = 'axios de algo';
+const createPropController = (title: string, location: string, id_property: number) => {
+    const response = `axios.post de ${title}, ${location}, ${id_property}`;
     return response;
 }
 
-export default getAllPropsController;
+export default createPropController;

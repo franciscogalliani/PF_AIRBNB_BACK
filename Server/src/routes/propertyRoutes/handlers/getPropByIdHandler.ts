@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import getPropById from "../controllers/getAllPropsController";
+import getPropById from "../controllers/getPropByIdController";
+
 
 const getPropByIdHandler = async (req: Request, res: Response) => {
     const  { id } = req.params

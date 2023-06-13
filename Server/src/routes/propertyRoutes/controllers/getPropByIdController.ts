@@ -1,6 +1,6 @@
-const createPropController = (title: string, location: string, id_property: number) => {
-    const response = `axios.post de ${title}, ${location}, ${id_property}`;
+const getPropById = (id: number) => {
+    const response = `axios del ${id}`
     return response;
-}
+};
 
-export default createPropController;
+export default getPropById;
