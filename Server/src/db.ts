@@ -24,6 +24,11 @@ Rent(sequelize);
 Property(sequelize);
 Service(sequelize);
 
+let { Users, Ratings, Rents, Properties, Services } = sequelize.models
+
+Users.hasMany(Properties, { foreignKey: 'id_user' });
+Properties.belongsTo(Users, { foreignKey: 'id_user' })
+
 
 export default sequelize;
 

@@ -5,7 +5,7 @@ import { RentAttributes } from './Interfaces';
 interface UserInstance extends Model<RentAttributes>, RentAttributes { }
 
 const Rent = (sequelize: Sequelize) => {
-    sequelize.define<UserInstance>('Rent', {
+    sequelize.define<UserInstance>('Rents', {
 
         rent_id: {
             primaryKey: true,

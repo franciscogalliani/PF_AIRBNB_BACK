@@ -10,4 +10,6 @@ const PORT: number | undefined = process.env.PORT ? Number(process.env.PORT) : u
 server.listen(PORT, () => {
     sequelize.sync({ force: true })
     console.log(`Server listening at ${PORT}`);
-});
+    console.log(sequelize.models)
+})
+

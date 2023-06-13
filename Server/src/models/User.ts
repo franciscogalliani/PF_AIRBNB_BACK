@@ -4,8 +4,8 @@ import { UserAttributes } from './Interfaces';
 interface UserInstance extends Model<UserAttributes>, UserAttributes {}
 
 const User = (sequelize: Sequelize) => {
-    sequelize.define<UserInstance>('User', {
-            id_usuario: {
+    sequelize.define<UserInstance>('Users', {
+            id_user: {
                 primaryKey: true,
                 type: DataTypes.STRING,
                 allowNull: false

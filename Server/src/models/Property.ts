@@ -4,7 +4,7 @@ import { PropertyAttributes } from "./Interfaces";
 interface PropertyInstance extends Model<PropertyAttributes>, PropertyAttributes {}
 
 const Property = (sequelize: Sequelize) => {
-    sequelize.define<PropertyInstance>('Property', {
+    sequelize.define<PropertyInstance>('Properties', {
         id_property: {
             type: DataTypes.INTEGER,
             primaryKey: true,

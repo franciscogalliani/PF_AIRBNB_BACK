@@ -1,5 +1,5 @@
 export interface UserAttributes {
-    id_usuario: string
+    id_user: string
     name?: string
     surname?: string
     email: string
