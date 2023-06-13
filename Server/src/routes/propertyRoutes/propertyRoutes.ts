@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { getAllPropHandler, getPropByIdHandler, createPropHandler } from './handlers/propertyHandlers';
+import getAllPropHandler from './handlers/getAllPropHandler';
+import getPropByIdHandler from './handlers/getPropByIdHandler';
+import createPropHandler from './handlers/createPropHandler';
 
 const propertyRoutes = Router();
 
