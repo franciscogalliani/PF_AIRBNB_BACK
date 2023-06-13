@@ -5,7 +5,7 @@ const formBodyCheck = (requiredParams: string[], body: any): boolean | string =>
         if(Array.isArray(body[param])) {
             if(body[param].length < 1) missingParams.push(param);
         }
-        if(body[param] === null) missingParams.push(param);
+        if(body[param] === undefined) missingParams.push(param);
     })
 
     if(missingParams.length > 0) return `Missing the next params: ${missingParams.join(', ')}`;
