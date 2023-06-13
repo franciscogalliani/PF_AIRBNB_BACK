@@ -25,6 +25,7 @@ Rent(sequelize);
 Property(sequelize);
 Service(sequelize);
 
+const { Properties, Ratings, Rents, Services, Users } = sequelize.models;
 
 export default sequelize;
 

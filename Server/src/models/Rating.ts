@@ -5,7 +5,7 @@ import { RatingAttributes } from './Interfaces';
 interface UserInstance extends Model<RatingAttributes>, RatingAttributes { }
 
 const Rating = (sequelize: Sequelize) => {
-    sequelize.define<UserInstance>('Rating', {
+    sequelize.define<UserInstance>('Ratings', {
 
         rating_id: {
             type: DataTypes.INTEGER,
