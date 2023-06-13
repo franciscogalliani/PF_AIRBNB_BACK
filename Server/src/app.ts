@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import router from './routes';
+import fileUpload = require('express-fileupload');
 
 interface CustomError extends Error {
     status?: number;
@@ -19,6 +20,10 @@ server.use((req: Request, res: Response, next: NextFunction): void => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+server.use(fileUpload({
+    useTempFiles : true,
+    tempFileDir : '/tmp/'
+}));
 
 server.use('/', router)
 
