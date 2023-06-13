@@ -5,7 +5,7 @@ import Rating from './models/Rating';
 import Rent from './models/Rent';
 import Property from './models/Property';
 import Service from './models/Service';
-
+//Comentario de prueba
 
 dotenv.config();
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
