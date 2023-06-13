@@ -45,8 +45,8 @@ export interface PropertyAttributes {
     description: string
     price_per_night: number
     images: string[]
-    rating: number
-    ratings_amount: number
+    rating?: number
+    ratings_amount?: number
     start_date: Date
     end_date: Date
     is_active: boolean
