@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import getAllPropsController from "../controllers/createPropController";
+import getAllPropsController from "../controllers/getAllPropsController";
+
 
 
 const getAllPropHandler = async (req: Request, res: Response) => {

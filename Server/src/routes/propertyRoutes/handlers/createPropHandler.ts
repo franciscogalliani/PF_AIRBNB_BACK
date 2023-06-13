@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import createPropController from "../controllers/getPropByIdController";
+import createPropController from "../controllers/createPropController";
+
 
 const createPropHandler = async(req: Request, res: Response) => {
     const { title, location, id_property } = req.body;
