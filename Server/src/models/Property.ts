@@ -49,12 +49,12 @@ const Property = (sequelize: Sequelize) => {
         },
         rating: {
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0
         },
         ratings_amount: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0
         },
         start_date: {
