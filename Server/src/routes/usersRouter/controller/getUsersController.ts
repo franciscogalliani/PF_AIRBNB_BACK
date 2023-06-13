@@ -1,17 +1,13 @@
 import { Op } from 'sequelize'
 import  sequalize  from '../../../db'
 
-const { User, Properties } = sequalize.models
+const { Users, Properties } = sequalize.models
 
 export const getUsers =  async () => {
         //Es una prueba, cuando tengamos toda la bd se hace con  User.findAll().
-        const response = await User.findAll({
+        const response = await Users.findAll({
             include: {
                 model: Properties,
-                attributes: ['id_property', 'title'],
-                through: {
-                    attributes: []
-                }
             }
         });
         return response;
@@ -19,13 +15,9 @@ export const getUsers =  async () => {
 
 export const getUsersByName = async (name: string) => {
 
-        const response = await User.findAll({
+        const response = await Users.findAll({
             include: {
                 model: Properties,
-                attributes: ['id_property', 'title'],
-                through: {
-                    attributes: []
-                }
             },
             where: {
                 name: { [Op.iLike]: `%${name}%`}
@@ -38,13 +30,9 @@ export const getUsersByName = async (name: string) => {
 };
 
 export const getUsersById = async (id: number) => {
-    const response = await User.findAll({
+    const response = await Users.findAll({
         include: {
             model: Properties,
-            attributes: ['id_property', 'title'],
-            through: {
-                attributes: []
-            }
         },
         where: {
             id_usuario: id
