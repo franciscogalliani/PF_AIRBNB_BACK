@@ -10,10 +10,10 @@ async function startServer() {
   try {
     await sequelize.sync({ force: true });
     console.log('Database synchronized');
-    
+
     await createServices();
     console.log('Services created');
-    
+
     server.listen(PORT, () => {
       console.log(`Server listening at ${PORT}`);
     });
@@ -23,3 +23,4 @@ async function startServer() {
 }
 
 startServer();
+

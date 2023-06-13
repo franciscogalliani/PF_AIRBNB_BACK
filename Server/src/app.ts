@@ -3,15 +3,27 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import router from './routes';
 
+import fileUpload from "express-fileupload";
+
+
+
+
+
+
 interface CustomError extends Error {
     status?: number;
 }
 
 const server: Express = express();
 
+
+
+
+
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(morgan('dev'));
+
 server.use((req: Request, res: Response, next: NextFunction): void => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Credentials', 'true');
@@ -19,6 +31,15 @@ server.use((req: Request, res: Response, next: NextFunction): void => {
     res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     next();
 });
+server.use(fileUpload({
+
+    useTempFiles: true,
+    tempFileDir: '/tmp/'
+}));
+
+
+
+
 
 server.use('/', router)
 
