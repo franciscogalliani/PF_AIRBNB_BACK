@@ -51,9 +51,8 @@ export interface PropertyAttributes {
     end_date: Date
     is_active: boolean
     rooms_number: number
-    bathrooms_number?: number
+    bathrooms_number: number
     beds_number: number
-    beds_type?: BedsType[]
     max_guests: number
     allow_pets: boolean
     weekly_discount: boolean
