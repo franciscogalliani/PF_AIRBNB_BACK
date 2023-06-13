@@ -4,13 +4,13 @@ const { Property, Rating, Service } = sequalize.models
 
 const getPropById = async(id: number) => {
     const response = await Property.findAll({
-        // include: {
-        //     model: Service,
-        //     attributes: ['name'],
-        //     through: {
-        //         attributes: []
-        //     }
-        // },
+        include: {
+            model: Service,
+            attributes: ['name'],
+            through: {
+                attributes: []
+            }
+        },
         where: {
             id: id
         }
