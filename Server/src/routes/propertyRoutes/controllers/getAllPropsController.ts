@@ -8,13 +8,13 @@ const getAllPropsController = async (name: string | void) => {
         const response = await Properties.findAll({
             include: {
                 model: Services,
-                attributes: ['name'],
+                attributes: ['name', 'icon'],
                 through: {
                     attributes: []
                 }
             },
             where: {
-                name: { [Op.iLike]: `%${name}%`}
+                title: { [Op.iLike]: `%${name}%`}
             }
         })
         if(response.length > 0){
@@ -24,7 +24,7 @@ const getAllPropsController = async (name: string | void) => {
     const response = await Properties.findAll({
         include: {
             model: Services,
-            attributes: ['name'],
+            attributes: ['name', 'icon'],
             through: {
                 attributes: []
             }
