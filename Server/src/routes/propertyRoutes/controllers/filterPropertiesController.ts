@@ -2,14 +2,14 @@ import { Op } from 'sequelize';
 import sequalize from '../../../db';
 import { PropertyAttributes } from '../../../models/Interfaces';
 
-const { Properties } = sequalize.models;
+const { Properties, Services } = sequalize.models;
 
 interface ExtendedPropertyAttributes extends PropertyAttributes {
     min_price_per_night?: number;
     max_price_per_night?: number;
 }
 
-const filterPropertiesController = async (filterProperties: Partial<ExtendedPropertyAttributes>) => {
+const filterPropertiesController = async (filterProperties: Partial<ExtendedPropertyAttributes>, page: number = 0) => {
     const {
         province,
         location,
@@ -17,15 +17,16 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         property_type,
         max_guests,
         min_price_per_night,
-        max_price_per_night
+        max_price_per_night,
     } = filterProperties;
 
+    
     const whereClause: any = {};
-
+    
     if (province) {
         whereClause.province = province;
     }
-
+    
     if (location) {
         whereClause.location = location;
     }
@@ -33,17 +34,17 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
     if (allow_pets !== undefined) {
         whereClause.allow_pets = allow_pets;
     }
-
+    
     if (property_type) {
         whereClause.property_type = property_type;
     }
-
+    
     if (max_guests !== undefined) {
         whereClause.max_guests = max_guests;
     }
-
+    
     const priceClause: any = {};
-
+    
     if (min_price_per_night !== undefined && max_price_per_night !== undefined) {
         priceClause.price_per_night = {
             [Op.between]: [min_price_per_night, max_price_per_night]
@@ -57,17 +58,30 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
             [Op.lte]: max_price_per_night
         };
     }
-
-    const properties = await Properties.findAll({
+    
+    const size = 3
+    
+    const options = {
+        limit: size,
+        offset: page * size,
+        include: {
+            model: Services,
+            attributes: ['name', 'icon'],
+            through: {
+                attributes: []
+            }
+        },
         where: {
             ...whereClause,
             ...priceClause
         }
-    });
+    }
+    
+    const properties = await Properties.findAll(options);
     console.log(properties.length);
     
     if (properties.length > 0) return properties;
-
+    
     return "No existen propiedades con esas caracteristicas"
 };
 
