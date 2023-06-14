@@ -4,7 +4,7 @@ import { ServiceAttributes } from "./Interfaces";
 interface ServiceInstance extends Model<ServiceAttributes>, ServiceAttributes {}
 
 const Service = (sequelize: Sequelize) => {
-    sequelize.define<ServiceInstance>('Service', {
+    sequelize.define<ServiceInstance>('Services', {
         service_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,

@@ -4,12 +4,19 @@ import { PropertyAttributes } from "./Interfaces";
 interface PropertyInstance extends Model<PropertyAttributes>, PropertyAttributes {}
 
 const Property = (sequelize: Sequelize) => {
-    sequelize.define<PropertyInstance>('Property', {
+    sequelize.define<PropertyInstance>('Properties', {
         id_property: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false
+        },
+        id_user: {
+            type: DataTypes.STRING,
+            references: {
+                model: 'Users',
+                key: 'id_user'
+            }
         },
         title: {
             type: DataTypes.STRING,
@@ -24,6 +31,10 @@ const Property = (sequelize: Sequelize) => {
             allowNull: false
         },
         address: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        zip_code: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -45,16 +56,20 @@ const Property = (sequelize: Sequelize) => {
         },
         rating: {
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0
         },
         ratings_amount: {
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
             defaultValue: 0
         },
-        availability: {
-            type: DataTypes.ARRAY(DataTypes.DATEONLY),
+        start_date: {
+            type: DataTypes.DATEONLY,
+            allowNull: false
+        },
+        end_date: {
+            type: DataTypes.DATEONLY,
             allowNull: false
         },
         is_active: {
@@ -76,10 +91,6 @@ const Property = (sequelize: Sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
-        },
-        beds_type: {
-            type: DataTypes.ARRAY(DataTypes.JSONB),
-            allowNull: true
         },
         max_guests: {
             type: DataTypes.INTEGER,
