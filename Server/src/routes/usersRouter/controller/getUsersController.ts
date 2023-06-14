@@ -29,14 +29,12 @@ export const getUsersByName = async (name: string) => {
         return 'No hay propiedades con ese nombre'
 };
 
-export const getUsersById = async (id: number) => {
-    const response = await Users.findAll({
-        include: {
-            model: Properties,
-        },
-        where: {
-            id_usuario: id
-        }
-    })
-    return response;
-};
+export const getUsersById = async (id: string) => {
+    const user: any = await Users.findByPk(id);
+    const properties: any = await user.getProperties()
+
+    return {
+        ...user.get(),
+        properties: properties.map((property: any) => property.get()),
+      };
+    };

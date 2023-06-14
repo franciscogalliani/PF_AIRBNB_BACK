@@ -12,16 +12,23 @@ interface Property_Services extends PropertyAttributes {
 const createPropController = async (newProperty: Partial<Property_Services>) => {
     const services: string[] | undefined = newProperty.services;
 
-    const createdProperty: any = await Properties.create(newProperty);
-    const userOwner: any = await Users.findByPk(newProperty.id_user);
-    await userOwner.addProperties(createdProperty);
+    const { id_user, ...propertyParams } = newProperty;
+
+    const user: any = await Users.findByPk(id_user);
+
+    if (!user) {
+    throw new Error('El usuario no existe');
+    }
+
+    const property: any = await Properties.create(propertyParams);
+    await user.addProperty(property);
 
     if (services && services.length > 0) {
         const servicesFromDb = await Services.findAll({ where: { name: services } });
-        await createdProperty.addServices(servicesFromDb);
+        await property.addServices(servicesFromDb);
     }
 
-    return createdProperty;
+    return property;
 };
 
 export default createPropController;
