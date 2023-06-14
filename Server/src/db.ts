@@ -9,12 +9,15 @@ import Service from './models/Service';
 dotenv.config();
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
-// const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}@${DB_HOST}:7823/railway`
+// // const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}@${DB_HOST}:7823/railway`
 
-const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}@${DB_HOST}:7823/railway`, {
+// const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}@${DB_HOST}:7823/railway`, {
+//     logging: false,
+//     native: false
+// });
+const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/arbnb`,{
     logging: false,
-    native: false
-});
+    native: false})
 
 
 User(sequelize)

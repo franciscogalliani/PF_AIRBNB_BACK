@@ -1,5 +1,4 @@
 import sequelize from "../../../db";
-import {Model} from "sequelize"
 import { PropertyAttributes } from "../../../models/Interfaces";
 
 
