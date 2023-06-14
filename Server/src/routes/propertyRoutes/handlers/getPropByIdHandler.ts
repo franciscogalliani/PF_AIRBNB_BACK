@@ -9,8 +9,8 @@ const getPropByIdHandler = async (req: Request, res: Response) => {
     try {
         if(id){
             const propById = await getPropById(numberId)
-            console.log(propById);
-            res.status(200).json(propById)
+            if(propById.length) res.status(200).json(propById)
+            else throw new Error('There is no property with this id')
         }
     } catch (error) {
         const errorMessage = (error as Error).message
