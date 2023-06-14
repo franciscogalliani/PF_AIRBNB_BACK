@@ -60,6 +60,7 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
     }
     
     const size = 3
+    
     const options = {
         limit: size,
         offset: page * size,
