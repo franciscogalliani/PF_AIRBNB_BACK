@@ -30,11 +30,11 @@ export const getUsersByName = async (name: string) => {
 };
 
 export const getUsersById = async (id: string) => {
-    const user: any = await Users.findByPk(id);
-    const properties: any = await user.getProperties()
 
-    return {
-        ...user.get(),
-        properties: properties.map((property: any) => property.get()),
-      };
+        const response = await Users.findByPk(id, {
+            include: {
+                model: Properties
+            }
+        })
+        return response;
     };
