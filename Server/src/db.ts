@@ -7,7 +7,7 @@ import Property from './models/Property';
 import Service from './models/Service';
 
 dotenv.config();
-const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
+const { DB_USER, DB_PASSWORD, DB_HOST, DB_DEPLOY } = process.env;
 
 // // const sequelize: Sequelize = new Sequelize(`${DB_USER}://postgres:${DB_PASSWORD}@${DB_HOST}:7823/railway`
 
@@ -15,7 +15,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 //     logging: false,
 //     native: false
 // });
-const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/arbnb`,{
+const sequelize: Sequelize = new Sequelize(`${DB_DEPLOY}`,{
     logging: false,
     native: false})
 
