@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
+import { Request, Response, Express } from "express";
 import createPropController from "../controllers/createPropController";
 import { PropertyAttributes } from "../../../models/Interfaces";
 import formBodyCheck from "../../../controllers/checkFormProps";
+import fs from 'fs';
+import { imageUpdate } from "../../../utils/cloudinary";
 
 
 const createPropHandler = async(req: Request, res: Response) => {
@@ -31,8 +33,21 @@ const createPropHandler = async(req: Request, res: Response) => {
         "min_nights",
     ]
     const result: string|boolean = formBodyCheck(propertiesArray, req.body)
-
     const newProperty = req.body as PropertyAttributes
+    const multerArray = req.files as Express.Multer.File[];
+    let pathsArray: string[] = [];
+    if (multerArray) {
+        pathsArray = await Promise.all(multerArray.map(async (obj: Express.Multer.File) => {
+            const uploadResult = await imageUpdate(obj.path);
+            fs.unlink(obj.path, (err) => {
+                if (err) {
+                    console.error('Error deleting local file:', err);
+                }
+            });
+            return uploadResult.url;
+        }));
+    }
+    newProperty.images = pathsArray
     
     try {
         if(result === true){

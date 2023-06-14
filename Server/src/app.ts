@@ -2,8 +2,9 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import router from './routes';
-import cors from 'cors'
-import fileUpload from "express-fileupload";
+import cors from 'cors';
+import multer from 'multer';
+
 
 interface CustomError extends Error {
     status?: number;
@@ -22,11 +23,19 @@ server.use(
       methods: 'GET, POST, OPTIONS, PUT, DELETE',
     })
 );
-server.use(fileUpload({
 
-    useTempFiles: true,
-    tempFileDir: '/tmp/'
-}));
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, 'src/public/images')
+    },
+    filename: function(req, file, cb){
+        cb(null, file.originalname)
+    }
+})
+
+const upload = multer({ storage: storage })
+
+server.use(upload.any())
 
 server.use('/', router)
 
