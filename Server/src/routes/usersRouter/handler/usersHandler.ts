@@ -21,9 +21,10 @@ export const getUsersHandler = async(req: Request, res: Response) => {
 
 export const getUsersByIdHandler = async (req: Request, res: Response) => {
     const {id} = req.params
+    const numberId = Number(id)
     try {
         if(id){
-            const userById = await getUsersById(id)
+            const userById = await getUsersById(numberId)
             res.status(200).send(userById)
         }
     } catch (error) {

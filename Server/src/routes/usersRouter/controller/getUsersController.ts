@@ -1,24 +1,42 @@
-import User from "../../../db"
+import { Op } from 'sequelize'
+import  sequalize  from '../../../db'
 
-export const getUsers =  () => {
+const { Users, Properties } = sequalize.models
+
+export const getUsers =  async () => {
         //Es una prueba, cuando tengamos toda la bd se hace con  User.findAll().
-        const users = 'Trae a todos los User de la bd'
-        return users
+        const response = await Users.findAll({
+            include: {
+                model: Properties,
+            }
+        });
+        return response;
     }
 
-export const getUsersById =(id: string)=>{
-    //es una prueba, cuando tengamos la bd se hace con User.findByPk(id)
-    if(id){
-        const user = `Trae a el usuario con id = ${id}`
-        return user
-    }
-    else throw Error("El ID no existe o es nulo")
+export const getUsersByName = async (name: string) => {
 
-}
+        const response = await Users.findAll({
+            include: {
+                model: Properties,
+            },
+            where: {
+                name: { [Op.iLike]: `%${name}%`}
+            }
+        })
+        if(response.length > 0){
+            return response
+        }
+        return 'No hay propiedades con ese nombre'
+};
 
-
-export const getUsersByName = async(name:string)=>{
-    //Es una prueba, cuando tenga la bd se realiza con User.findAll({where{name:name}})
-    const usersByName = `Trae a todos los Users de la bd que tengan name = ${name}`
-    return usersByName
-}
+export const getUsersById = async (id: number) => {
+    const response = await Users.findAll({
+        include: {
+            model: Properties,
+        },
+        where: {
+            id_usuario: id
+        }
+    })
+    return response;
+};
