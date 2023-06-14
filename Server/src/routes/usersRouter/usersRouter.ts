@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { getUsersHandler, getUsersByIdHandler, putUsersHandler } from "./handler/usersHandler"
 import createUsersHandler from "./handler/createUsersHandler";
+import getUsersHandler from "./handler/getUsersHandler";
+import getUsersByIdHandler from "./handler/getUsersByIdHandler";
 
 const usersRouter: Router = Router();
 
@@ -10,7 +11,6 @@ usersRouter.get("/:id", getUsersByIdHandler)
 
 usersRouter.post('/', createUsersHandler)
 
-usersRouter.put('/:id', putUsersHandler)
 
 
 export default usersRouter;

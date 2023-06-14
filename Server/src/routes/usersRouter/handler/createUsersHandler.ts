@@ -19,7 +19,6 @@ const createUsersHandler = async (req: Request, res: Response) => {
         else throw new Error(`${result}`)
     } catch (error) {
         const errorMessage = (error as Error).message
-        console.log(errorMessage);
         return res.status(400).send({ error: errorMessage })
     }
 }
