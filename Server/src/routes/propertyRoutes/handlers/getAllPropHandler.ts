@@ -5,6 +5,7 @@ import filterPropertiesController from "../controllers/filterPropertiesControlle
 const getAllPropHandler = async (req: Request, res: Response) => {
     const querys:object = req.query
     const page = req.query.page
+    const order = req.query.order_price
 
     try {
         if (Object.keys(querys).length > 0) {
