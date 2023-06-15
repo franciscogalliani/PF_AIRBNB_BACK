@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import server from "./src/app";
 import sequelize from './src/db';
 import createServices from './src/controllers/createServices';
+import createLocations from './src/controllers/createLocations'
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -13,6 +14,9 @@ async function startServer() {
 
     await createServices();
     console.log('Services created');
+
+    await createLocations();
+    console.log('Locations created')
 
     server.listen(PORT, () => {
       console.log(`Server listening at ${PORT}`);

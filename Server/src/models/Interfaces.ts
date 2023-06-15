@@ -66,3 +66,14 @@ export interface ServiceAttributes {
     name: string
     icon: string
 }
+
+export interface LocationAttributes {
+    id: number
+    nombre: string
+    ciudades: Locations[]
+}
+
+type Locations = {
+    id: string
+    nombre: string
+}

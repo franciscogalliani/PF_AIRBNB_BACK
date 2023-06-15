@@ -5,6 +5,7 @@ import Rating from './models/Rating';
 import Rent from './models/Rent';
 import Property from './models/Property';
 import Service from './models/Service';
+import Location from './models/Locations';
 
 dotenv.config();
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
@@ -25,6 +26,7 @@ Rating(sequelize)
 Rent(sequelize);
 Property(sequelize);
 Service(sequelize);
+Location(sequelize);
 
 
 const { Users, Ratings, Rents, Properties, Services } = sequelize.models
