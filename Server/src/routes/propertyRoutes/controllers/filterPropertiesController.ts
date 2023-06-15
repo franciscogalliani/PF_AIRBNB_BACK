@@ -88,3 +88,4 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
 };
 
 export default filterPropertiesController;
+
