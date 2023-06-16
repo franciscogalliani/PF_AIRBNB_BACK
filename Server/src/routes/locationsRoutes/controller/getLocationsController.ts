@@ -1,8 +1,9 @@
 import sequelize from "../../../db";
 
+
 const { Locations } = sequelize.models;
 
-const getLocations = async (province: string) => {
+const getLocations = async (province: string, cityName?: string ) => {
     try {
         const response = await Locations.findAll({
             attributes: ['nombre', 'ciudades'],
@@ -10,6 +11,11 @@ const getLocations = async (province: string) => {
                 nombre: province
             }
         })
+        if(cityName){
+            response.forEach((location:any)=>{
+                location.ciudades = location.ciudades.filter((ciudad:any)=> ciudad.nombre.toLowerCase().includes(cityName))
+            })
+        }
         if(response) return response;
         else throw new Error;
     } catch (error) {

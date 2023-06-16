@@ -7,6 +7,7 @@ const getProvinces = async () => {
         const response = await Locations.findAll({
             attributes: ['nombre']
         })
+        
         if(response) return response
         else throw new Error
     } catch (error) {
