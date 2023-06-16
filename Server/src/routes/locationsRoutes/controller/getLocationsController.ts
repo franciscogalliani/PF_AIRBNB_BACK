@@ -12,10 +12,10 @@ const getLocations = async (province: string, cityName?: string ) => {
             }
         })
         if(cityName){
-            response.forEach((location:any)=>{
-                location.ciudades = location.ciudades.filter((ciudad:any)=> ciudad.nombre.toLowerCase().includes(cityName))
-            })
-        }
+            response.forEach((location: any) => {
+              location.ciudades = location.ciudades.filter((ciudad: any) => ciudad.nombre.toLowerCase().startsWith(cityName.toLowerCase()));
+            });
+          }
         if(response) return response;
         else throw new Error;
     } catch (error) {
