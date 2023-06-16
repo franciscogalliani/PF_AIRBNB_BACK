@@ -82,7 +82,21 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
     const properties = await Properties.findAll(options);
     console.log(properties.length);
 
-    if (properties.length > 0) return properties;
+
+    const allProperties = await Properties.count({
+        where: {
+        ...whereClause,
+        ...priceClause
+    }})
+
+    const pagesNumber= Math.ceil(allProperties / size)
+
+    const result = {
+        pagesNumber,
+        properties
+    }
+
+    if (properties.length > 0) return result;
 
     return "No existen propiedades con esas características";
 };
