@@ -10,6 +10,17 @@ interface ExtendedPropertyAttributes extends PropertyAttributes {
     order_price?: string;
 }
 
+// function getDatesInRange(startDate: any, endDate: any) {
+//     var dates = [];
+//     var currentDate = new Date(startDate);
+
+//     while (currentDate <= endDate) {
+//         dates.push(new Date(currentDate));
+//         currentDate.setDate(currentDate.getDate() + 1);
+//     }
+//     return dates;
+// }
+
 const filterPropertiesController = async (filterProperties: Partial<ExtendedPropertyAttributes>, page: number = 0) => {
     const {
         province,
@@ -20,6 +31,8 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         min_price_per_night,
         max_price_per_night,
         order_price,
+        start_date,
+        end_date
     } = filterProperties;
 
     const whereClause: any = {};
@@ -44,6 +57,18 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         whereClause.max_guests = max_guests;
     }
 
+    const dateClause: any = {};
+
+    // const rageDate = getDatesInRange(start_date, end_date);
+
+    // console.log(rageDate);
+    
+    if(start_date && end_date){
+        dateClause.end_date = {
+            [Op.between]: [start_date, end_date]
+        }
+    }
+
     const priceClause: any = {};
 
     if (min_price_per_night !== undefined && max_price_per_night !== undefined) {
@@ -60,7 +85,7 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         };
     }
 
-    const size = 3;
+    const size = 5;
 
     const options = {
         limit: size,
@@ -75,6 +100,7 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         where: {
             ...whereClause,
             ...priceClause,
+            ...dateClause
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
     };
@@ -86,7 +112,8 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
     const allProperties = await Properties.count({
         where: {
         ...whereClause,
-        ...priceClause
+        ...priceClause,
+        ...dateClause
     }})
 
     const pagesNumber= Math.ceil(allProperties / size)
