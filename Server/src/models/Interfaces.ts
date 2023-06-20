@@ -25,11 +25,13 @@ export interface RatingAttributes {
 
 export interface RentAttributes {
     rent_id: number
+    id_user: string
+    id_property: number
     start_date: Date
     end_date: Date
     amount: number
     payment_status: boolean
-    Payment_date: Date
+    payment_date?: Date
     creation_date: Date
     active : boolean
 }

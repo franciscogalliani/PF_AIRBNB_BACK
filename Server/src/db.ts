@@ -16,7 +16,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 //     logging: false,
 //     native: false
 // });
-const sequelize: Sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/arbnb`,{
+const sequelize: any = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/arbnb`,{
     logging: false,
     native: false})
 
@@ -36,6 +36,11 @@ Properties.belongsTo(Users, { foreignKey: 'id_user' })
 
 Services.belongsToMany(Properties, { through: 'Property_Services' });
 Properties.belongsToMany(Services, { through: 'Property_Services' });
+
+Users.hasMany(Rents, { foreignKey: 'id_user' });
+Properties.hasMany(Rents, { foreignKey: 'id_property' });
+Rents.belongsTo(Users, { foreignKey: 'id_user' });
+Rents.belongsTo(Properties, { foreignKey: 'id_property' });
 
 export default sequelize;
 

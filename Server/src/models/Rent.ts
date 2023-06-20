@@ -10,7 +10,24 @@ const Rent = (sequelize: Sequelize) => {
         rent_id: {
             primaryKey: true,
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             allowNull: false
+        },
+        id_user: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            references: {
+            model: 'Users',
+            key: 'id_user'
+            }
+        },
+        id_property: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+            model: 'Properties',
+            key: 'id_property'
+            }
         },
         start_date: {
             type: DataTypes.DATEONLY,
@@ -28,9 +45,9 @@ const Rent = (sequelize: Sequelize) => {
             type: DataTypes.BOOLEAN,
             allowNull: false
         },
-        Payment_date: {
+        payment_date: {
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: true
         },
         creation_date: {
             type: DataTypes.DATE,
