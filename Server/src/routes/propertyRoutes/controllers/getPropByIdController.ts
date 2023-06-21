@@ -1,6 +1,6 @@
 import  sequalize  from '../../../db'
 
-const { Properties, Ratings, Services, Rents } = sequalize.models
+const { Properties, Ratings, Services, Rents, Users } = sequalize.models
 
 const getPropById = async(id: number) => {
     const response = await Properties.findAll({
@@ -11,7 +11,11 @@ const getPropById = async(id: number) => {
                 attributes: []
             }},
             {
-                model: Rents
+                model: Rents,
+            
+            },
+            {
+                model: Users
             }
         ]
             

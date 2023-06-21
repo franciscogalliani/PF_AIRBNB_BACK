@@ -48,34 +48,4 @@ server.use((err: CustomError, req: Request, res: Response, next: NextFunction): 
     res.status(status).send(message)
 });
 
-server.post('/rents', async (req, res) => {
-    try {
-        const { id_user, id_property, start_date, end_date, amount, payment_status, creation_date, active } = req.body;
-  
-      // Crea una nueva instancia de Rents con los datos recibidos
-      const rent = await Rents.create({
-        start_date,
-        end_date,
-        amount,
-        payment_status,
-        creation_date,
-        active,
-        id_user,
-        id_property
-      });
-
-      const user = await Users.findByPk(id_user);
-      const property = await Properties.findByPk(id_property);
-      if (user && property) {
-        await rent.setUser(user);
-        await rent.setProperty(property);
-      }
-
-      res.status(201).json(rent);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
-
 export default server;
