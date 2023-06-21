@@ -61,6 +61,7 @@ export interface PropertyAttributes {
     weekly_discount: boolean
     monthly_discount: boolean
     min_nights: number
+    accessibility: boolean
 }
 
 export interface ServiceAttributes {

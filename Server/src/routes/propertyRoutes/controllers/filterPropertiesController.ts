@@ -8,10 +8,11 @@ interface ExtendedPropertyAttributes extends PropertyAttributes {
     min_price_per_night?: number;
     max_price_per_night?: number;
     order_price?: string;
+    services?: string[]
 }
 
 const filterPropertiesController = async (filterProperties: Partial<ExtendedPropertyAttributes>, page: number = 0) => {
-    const {
+    let {
         province,
         location,
         allow_pets,
@@ -20,7 +21,38 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         min_price_per_night,
         max_price_per_night,
         order_price,
+        services,
+        bathrooms_number,
+        beds_number,
+        rooms_number,
+        accessibility
     } = filterProperties;
+
+    const accessibilityClause:any = {}
+
+    if (accessibility !== undefined){
+        accessibilityClause.accessibility= accessibility
+    }
+
+    const roomsClause: any = {};
+
+    if (rooms_number !== undefined) {
+        roomsClause.rooms_number = rooms_number
+    }
+
+
+    const bedsClause: any = {};
+
+    if (beds_number !== undefined) {
+        bedsClause.beds_number = beds_number
+    }
+
+
+    const bathroomsClause: any = {};
+
+    if (bathroomsClause !== undefined) {
+        bathroomsClause.bathrooms_number = bathrooms_number
+    }
 
     const whereClause: any = {};
 
@@ -40,8 +72,10 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         whereClause.property_type = property_type;
     }
 
+    const guestsClause: any = {};
+
     if (max_guests !== undefined) {
-        whereClause.max_guests = max_guests;
+        guestsClause.max_guests = { [Op.lte]: max_guests };
     }
 
     const priceClause: any = {};
@@ -60,46 +94,92 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         };
     }
 
-    const size = 3;
+    const size = 100;
 
     const options = {
         limit: size,
         offset: page * size,
+        include: [
+            {
+                model: Services,
+                attributes: ['name', 'icon'],
+                through: {
+                    attributes: [],
+                },
+                where: {},
+            },
+        ],
+        where: {
+            ...whereClause,
+            ...priceClause,
+            ...guestsClause,
+            ...bathroomsClause,
+            ...bedsClause,
+            ...roomsClause,
+            ...accessibilityClause
+        },
+        order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
+    };
+
+    if (services && services.length > 0) {
+        options.include[0].where = {
+            name: { [Op.in]: services },
+        };
+    }
+
+    const properties = await Properties.findAll(options);
+
+    const allProperties = await Properties.count({
         include: {
             model: Services,
             attributes: ['name', 'icon'],
             through: {
                 attributes: [],
-            },
+            }
         },
         where: {
             ...whereClause,
             ...priceClause,
-        },
-        order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
-    };
+            ...guestsClause,
+            ...bathroomsClause,
+            ...bedsClause,
+            ...roomsClause,
+            ...accessibilityClause
+        }
+    });
 
-    const properties = await Properties.findAll(options);
-    console.log(properties.length);
+    const pagesNumber = Math.ceil(allProperties / size);
 
+    const filteredProperties = await Promise.all(properties.map(async (property: any) => {
+        const propertyServices: any = await property.getServices();
+        const propertyServiceNames = propertyServices.map((service: any) => service.name);
 
-    const allProperties = await Properties.count({
-        where: {
-        ...whereClause,
-        ...priceClause
-    }})
+        if (services && services.length > 0) {
+            const hasAllServices = services.every((service) => propertyServiceNames.includes(service));
+            if (!hasAllServices) {
+                return null;
+            }
+        }
 
-    const pagesNumber= Math.ceil(allProperties / size)
+        return property;
+    }));
+
+    const validProperties = filteredProperties.filter((property) => property !== null);
+
+    console.log(validProperties.length);
 
     const result = {
         pagesNumber,
-        properties
-    }
+        properties: validProperties,
+    };
 
-    if (properties.length > 0) return result;
+    if (validProperties.length > 0) {
+        return result;
+    }
 
     return "No existen propiedades con esas características";
 };
 
 export default filterPropertiesController;
+
 
