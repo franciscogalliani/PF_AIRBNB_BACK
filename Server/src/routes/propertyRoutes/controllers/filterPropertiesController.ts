@@ -141,7 +141,13 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bathroomsClause,
             ...bedsClause,
             ...roomsClause,
-            ...accessibilityClause
+            ...accessibilityClause,
+            start_date: {
+                [Op.lte]: start_date,
+            },
+            end_date: {
+                [Op.gte]: end_date,
+            },
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
     };
@@ -165,8 +171,14 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bathroomsClause,
             ...bedsClause,
             ...roomsClause,
-            ...accessibilityClause
-        }
+            ...accessibilityClause,
+            start_date: {
+                [Op.lte]: start_date,
+            },
+            end_date: {
+                [Op.gte]: end_date,
+            },
+        },
     });
 
     const pagesNumber = Math.ceil(allProperties / size);
