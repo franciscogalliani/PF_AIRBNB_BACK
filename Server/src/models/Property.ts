@@ -43,7 +43,7 @@ const Property = (sequelize: Sequelize) => {
             allowNull: false
         },
         description: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(),
             allowNull: false
         },
         price_per_night: {
@@ -114,6 +114,11 @@ const Property = (sequelize: Sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
+        },
+        accessibility:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue: false
         }
 })}
 
