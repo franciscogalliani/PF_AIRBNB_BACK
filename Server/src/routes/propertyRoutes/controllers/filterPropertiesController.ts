@@ -2,16 +2,9 @@ import { Op, OrderItem } from 'sequelize';
 import sequelize from '../../../db';
 import { PropertyAttributes } from '../../../models/Interfaces';
 
-const { Properties, Services } = sequelize.models;
+const { Properties, Services, Rents } = sequelize.models;
 
-interface ExtendedPropertyAttributes extends PropertyAttributes {
-    min_price_per_night?: number;
-    max_price_per_night?: number;
-    order_price?: string;
-    services?: string[]
-}
-
-const filterPropertiesController = async (filterProperties: Partial<ExtendedPropertyAttributes>, page: number = 0) => {
+const filterPropertiesController = async (filterProperties: Partial<any>, page: number = 0) => {
     let {
         province,
         location,
@@ -25,10 +18,12 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         bathrooms_number,
         beds_number,
         rooms_number,
-        accessibility
+        accessibility,
+        start_date,
+        end_date,
     } = filterProperties;
 
-    const accessibilityClause:any = {}
+    const accessibilityClause: any = {}
 
     if (accessibility !== undefined){
         accessibilityClause.accessibility= accessibility
@@ -40,17 +35,15 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         roomsClause.rooms_number = rooms_number
     }
 
-
     const bedsClause: any = {};
 
     if (beds_number !== undefined) {
         bedsClause.beds_number = beds_number
     }
 
-
     const bathroomsClause: any = {};
 
-    if (bathroomsClause !== undefined) {
+    if (bathrooms_number !== undefined) {
         bathroomsClause.bathrooms_number = bathrooms_number
     }
 
@@ -106,7 +99,39 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
                 through: {
                     attributes: [],
                 },
-                where: {},
+                where: services && services.length > 0 ? { name: { [Op.in]: services } } : {},
+            },
+            {
+                model: Rents,
+                where: {
+                    [Op.or]: [
+                        {
+                            start_date: {
+                                [Op.between]: [start_date, end_date],
+                            },
+                        },
+                        {
+                            end_date: {
+                                [Op.between]: [start_date, end_date],
+                            },
+                        },
+                        {
+                            [Op.and]: [
+                                {
+                                    start_date: {
+                                        [Op.lte]: start_date,
+                                    },
+                                },
+                                {
+                                    end_date: {
+                                        [Op.gte]: end_date,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                },
+                required: false,
             },
         ],
         where: {
@@ -121,11 +146,7 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
     };
 
-    if (services && services.length > 0) {
-        options.include[0].where = {
-            name: { [Op.in]: services },
-        };
-    }
+   
 
     const properties = await Properties.findAll(options);
 
@@ -155,7 +176,7 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
         const propertyServiceNames = propertyServices.map((service: any) => service.name);
 
         if (services && services.length > 0) {
-            const hasAllServices = services.every((service) => propertyServiceNames.includes(service));
+            const hasAllServices = services.every((service: any) => propertyServiceNames.includes(service));
             if (!hasAllServices) {
                 return null;
             }
@@ -166,11 +187,45 @@ const filterPropertiesController = async (filterProperties: Partial<ExtendedProp
 
     const validProperties = filteredProperties.filter((property) => property !== null);
 
-    console.log(validProperties.length);
+    const overlappingRents = await Rents.findAll({
+        where: {
+            [Op.or]: [
+                {
+                    start_date: {
+                        [Op.between]: [start_date, end_date],
+                    },
+                },
+                {
+                    end_date: {
+                        [Op.between]: [start_date, end_date],
+                    },
+                },
+                {
+                    [Op.and]: [
+                        {
+                            start_date: {
+                                [Op.lte]: start_date,
+                            },
+                        },
+                        {
+                            end_date: {
+                                [Op.gte]: end_date,
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+    });
+
+    const overlappingProperties = overlappingRents.map((rent: any) => rent.property_id);
+
+    // Devolver las propiedades que no tienen reservas que se superponen con el rango de fechas deseado
+    const availableProperties = validProperties.filter((property) => !overlappingProperties.includes(property.id));
 
     const result = {
         pagesNumber,
-        properties: validProperties,
+        properties: availableProperties,
     };
 
     if (validProperties.length > 0) {
