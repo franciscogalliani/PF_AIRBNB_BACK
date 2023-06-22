@@ -142,12 +142,7 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bedsClause,
             ...roomsClause,
             ...accessibilityClause,
-            start_date: {
-                [Op.lte]: start_date,
-            },
-            end_date: {
-                [Op.gte]: end_date,
-            },
+            ...(start_date && end_date ? { start_date: { [Op.lte]: start_date }, end_date: { [Op.gte]: end_date } } : {}),
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
     };
