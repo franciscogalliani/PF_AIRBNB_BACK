@@ -25,6 +25,10 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
 
     const accessibilityClause: any = {}
 
+    if (services === undefined) {
+        services = [];
+    }
+
     if (accessibility !== undefined){
         accessibilityClause.accessibility= accessibility
     }
@@ -92,18 +96,18 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
     const options = {
         limit: size,
         offset: page * size,
-        include: [
+        include: services.length > 0 ? [
             {
                 model: Services,
                 attributes: ['name', 'icon'],
                 through: {
                     attributes: [],
                 },
-                where: services && services.length > 0 ? { name: { [Op.in]: services } } : {},
+                where: Array.isArray(services) ? { name: { [Op.in]: services } } : { name: { [Op.eq]: services } },
             },
             {
                 model: Rents,
-                where: {
+                where: start_date && end_date ? {
                     [Op.or]: [
                         {
                             start_date: {
@@ -130,7 +134,40 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
                             ],
                         },
                     ],
-                },
+                } : {},
+                required: false,
+            },
+        ] : [
+            {
+                model: Rents,
+                where: start_date && end_date ? {
+                    [Op.or]: [
+                        {
+                            start_date: {
+                                [Op.between]: [start_date, end_date],
+                            },
+                        },
+                        {
+                            end_date: {
+                                [Op.between]: [start_date, end_date],
+                            },
+                        },
+                        {
+                            [Op.and]: [
+                                {
+                                    start_date: {
+                                        [Op.lte]: start_date,
+                                    },
+                                },
+                                {
+                                    end_date: {
+                                        [Op.gte]: end_date,
+                                    },
+                                },
+                            ],
+                        },
+                    ],
+                } : {},
                 required: false,
             },
         ],
@@ -142,6 +179,7 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bedsClause,
             ...roomsClause,
             ...accessibilityClause,
+            ...(max_guests !== undefined ? { max_guests: { [Op.gte]: max_guests } } : {}),
             ...(start_date && end_date ? { start_date: { [Op.lte]: start_date }, end_date: { [Op.gte]: end_date } } : {}),
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
@@ -177,19 +215,17 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
     });
 
     const pagesNumber = Math.ceil(allProperties / size);
+    
 
     const filteredProperties = await Promise.all(properties.map(async (property: any) => {
         const propertyServices: any = await property.getServices();
         const propertyServiceNames = propertyServices.map((service: any) => service.name);
-
-        if (services && services.length > 0) {
-            const hasAllServices = services.every((service: any) => propertyServiceNames.includes(service));
-            if (!hasAllServices) {
-                return null;
-            }
+    
+        if (services && (Array.isArray(services) ? services.every((service: any) => propertyServiceNames.includes(service)) : propertyServiceNames.includes(services))) {
+            return property;
         }
-
-        return property;
+    
+        return null;
     }));
 
     const validProperties = filteredProperties.filter((property) => property !== null);
