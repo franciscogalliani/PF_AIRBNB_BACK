@@ -3,10 +3,9 @@ import updateUser from "../controller/updateUsersController";
 
 const updateUsersHandler = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const updatedValues = req.body; 
+  const updatedValues = req.body;
 
   try {
-    console.log(updatedValues);    
     const updatedUser = await updateUser(id, updatedValues);
     res.status(200).json({ message: "Usuario actualizado", user: updatedUser });
   } catch (error) {

@@ -9,6 +9,10 @@ const updateUser = async (id: string, updatedValues: Partial<typeof Users>) => {
         id_user: id,
       },
     });
+
+    // Recuperar el usuario actualizado después de la actualización
+    const updatedUser = await Users.findByPk(id);
+    return updatedUser;
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(error.message);
