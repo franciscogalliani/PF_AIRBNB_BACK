@@ -1,25 +1,39 @@
-const mercadopago = require("mercadopago");
+import mercadopago from "mercadopago";
+import dotenv from 'dotenv';
+
+dotenv.config();
+const { ACCESS_TOKEN } = process.env;
 
 mercadopago.configure({
-    access_token: "Aqui  deberia estar un token de acceso! Atte: Willaims",
+    access_token: ACCESS_TOKEN as any,
 });
 
 //en teoria esta funcion deberia retornar un Id de mercado pago
 
-const createPreference = async (title: string, unit_price: string, quantity: string) => {
+const mercadoPagoPreference = async (title: string, unit_price: number) => {
     let preference = {
         items: [
             {
                 title,
                 unit_price,
-                quantity,
+                quantity: 1
             },
         ],
+        back_urls: {
+            success: "",
+            failure: "",
+            pending: ""
+        },
+
+        auto_return: "approved"
     };
 
     const responses = await mercadopago.preferences
-        .create(preference);
+        .create(preference as any);
 
     return responses.body.id
 
 }
+
+
+export default mercadoPagoPreference;

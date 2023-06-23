@@ -33,6 +33,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.13",
     "@types/express-fileupload": "^1.4.1",
+    "@types/mercadopago": "^1.5.8",
     "@types/morgan": "^1.9.4",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.22",
