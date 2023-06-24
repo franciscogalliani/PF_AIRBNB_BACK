@@ -1,7 +1,7 @@
 import { Op, OrderItem } from 'sequelize';
 import sequelize from '../../../db';
 import { PropertyAttributes } from '../../../models/Interfaces';
-
+import moment from 'moment'
 const { Properties, Services, Rents } = sequelize.models;
 
 const filterPropertiesController = async (filterProperties: Partial<any>, page: number = 0) => {
@@ -179,7 +179,7 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bedsClause,
             ...roomsClause,
             ...accessibilityClause,
-            ...(max_guests !== undefined ? { max_guests: { [Op.gte]: max_guests } } : {}),
+            ...(max_guests !== undefined ? { max_guests: { [Op.lte]: max_guests } } : {}),
             ...(start_date && end_date ? { start_date: { [Op.lte]: start_date }, end_date: { [Op.gte]: end_date } } : {}),
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
@@ -205,12 +205,18 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...bedsClause,
             ...roomsClause,
             ...accessibilityClause,
-            start_date: {
-                [Op.lte]: start_date,
-            },
-            end_date: {
-                [Op.gte]: end_date,
-            },
+            [Op.or]: [
+                {
+                    start_date: {
+                        [Op.lte]: end_date,
+                    },
+                },
+                {
+                    end_date: {
+                        [Op.gte]: start_date
+                    }
+                }
+            ],
         },
     });
 
@@ -235,36 +241,20 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             [Op.or]: [
                 {
                     start_date: {
-                        [Op.between]: [start_date, end_date],
+                        [Op.lte]: end_date,
                     },
-                },
-                {
                     end_date: {
-                        [Op.between]: [start_date, end_date],
+                        [Op.gte]: moment(start_date).add(1, 'day').toDate(),
                     },
-                },
-                {
-                    [Op.and]: [
-                        {
-                            start_date: {
-                                [Op.lte]: start_date,
-                            },
-                        },
-                        {
-                            end_date: {
-                                [Op.gte]: end_date,
-                            },
-                        },
-                    ],
                 },
             ],
         },
     });
-
-    const overlappingProperties = overlappingRents.map((rent: any) => rent.property_id);
-
+    
+    const overlappingProperties = overlappingRents.map((rent: any) => rent.id_property);
+    
     // Devolver las propiedades que no tienen reservas que se superponen con el rango de fechas deseado
-    const availableProperties = validProperties.filter((property) => !overlappingProperties.includes(property.id));
+    const availableProperties = validProperties.filter((property) => !overlappingProperties.includes(property.id_property));
 
     const result = {
         pagesNumber,
