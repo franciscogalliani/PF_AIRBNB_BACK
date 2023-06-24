@@ -114,6 +114,11 @@ const Property = (sequelize: Sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false,
             defaultValue: 1
+        },
+        accessibility:{
+            type: DataTypes.BOOLEAN,
+            allowNull:false,
+            defaultValue: false
         }
 })}
 

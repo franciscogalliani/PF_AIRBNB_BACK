@@ -29,6 +29,7 @@ export interface RentAttributes {
     id_property: number
     start_date: Date
     end_date: Date
+    guests_number: number
     amount: number
     payment_status: boolean
     payment_date?: Date
@@ -61,6 +62,7 @@ export interface PropertyAttributes {
     weekly_discount: boolean
     monthly_discount: boolean
     min_nights: number
+    accessibility: boolean
 }
 
 export interface ServiceAttributes {
