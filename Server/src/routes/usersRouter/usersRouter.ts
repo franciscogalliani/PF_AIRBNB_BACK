@@ -6,6 +6,7 @@ import updateUsersHandler from "./handler/updateUsersHandler";
 import updateFavoritesHandler from "./handler/updateFavoritesHandler"
 import getFavoritesHandler from "./handler/getFavoritesHandler";
 import deleteFavoriteHandler from "./handler/deleteFavoriteHandler";
+import getAllUsersHandler from "./handler/getAllUsersHandler";
 
 const usersRouter: Router = Router();
 
@@ -14,6 +15,8 @@ usersRouter.get("/", getUsersHandler)
 usersRouter.get("/:id", getUsersByIdHandler)
 
 usersRouter.get("/:id_user/favorites", getFavoritesHandler)
+
+usersRouter.get("/all/users", getAllUsersHandler)
 
 usersRouter.post('/', createUsersHandler)
 
