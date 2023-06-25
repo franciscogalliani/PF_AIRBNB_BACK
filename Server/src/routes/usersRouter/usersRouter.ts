@@ -10,13 +10,12 @@ import getAllUsersHandler from "./handler/getAllUsersHandler";
 
 const usersRouter: Router = Router();
 
-usersRouter.get("/", getUsersHandler)
+
+usersRouter.get("/", getAllUsersHandler)
 
 usersRouter.get("/:id", getUsersByIdHandler)
 
 usersRouter.get("/:id_user/favorites", getFavoritesHandler)
-
-usersRouter.get("/all/users", getAllUsersHandler)
 
 usersRouter.post('/', createUsersHandler)
 
