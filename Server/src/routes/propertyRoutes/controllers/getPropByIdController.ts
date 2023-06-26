@@ -16,6 +16,12 @@ const getPropById = async(id: number) => {
             },
             {
                 model: Users
+            },
+            {
+                model: Ratings,
+                include: {
+                    model: Users
+                }
             }
         ]
             

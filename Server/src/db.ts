@@ -45,5 +45,10 @@ Rents.belongsTo(Properties, { foreignKey: 'id_property' });
 Properties.belongsToMany(Users, { through: 'Favorites', foreignKey: 'propertyId' });
 Users.belongsToMany(Properties, { through: 'Favorites', foreignKey: 'userId' });
 
+Users.hasMany(Ratings, { foreignKey: 'id_user' });
+Properties.hasMany(Ratings, { foreignKey: 'id_property' });
+Ratings.belongsTo(Users, { foreignKey: 'id_user' });
+Ratings.belongsTo(Properties, { foreignKey: 'id_property' });
+
 export default sequelize;
 
