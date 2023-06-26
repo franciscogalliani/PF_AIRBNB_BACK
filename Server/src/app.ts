@@ -27,7 +27,7 @@ server.use(
       allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
       methods: 'GET, POST, OPTIONS, PUT, DELETE',
     })
-);
+)
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
