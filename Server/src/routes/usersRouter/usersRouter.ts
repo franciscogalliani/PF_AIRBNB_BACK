@@ -19,7 +19,7 @@ usersRouter.get("/:id_user/favorites", getFavoritesHandler)
 
 usersRouter.post('/', createUsersHandler)
 
-usersRouter.post('/:id_user/favorites', updateFavoritesHandler)
+usersRouter.post('/:id_user/favorites/:id_property', updateFavoritesHandler)
 
 usersRouter.delete('/:id_user/favorites/:id_property', deleteFavoriteHandler)
 
