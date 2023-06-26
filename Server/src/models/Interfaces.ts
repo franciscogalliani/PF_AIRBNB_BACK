@@ -14,6 +14,9 @@ export interface UserAttributes {
 
 export interface RatingAttributes {
     rating_id: number
+    id_user: string
+    id_property: number
+    description?: string
     total_rating: number
     cleaning_rating: number
     communication_rating: number

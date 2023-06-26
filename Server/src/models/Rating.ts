@@ -9,11 +9,32 @@ const Rating = (sequelize: Sequelize) => {
 
         rating_id: {
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        total_rating: {
+        id_user: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            references: {
+                model: 'Users',
+                key: 'id_user'
+            }
+        },
+        id_property: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+            references: {
+                model: 'Properties',
+                key: 'id_property'
+            }
+        },
+        description: {
+            type: DataTypes.STRING(1000),
+            allowNull: true
+        },
+        total_rating: {
+            type: DataTypes.FLOAT,
             allowNull: false
         },
         cleaning_rating: {
@@ -37,9 +58,12 @@ const Rating = (sequelize: Sequelize) => {
             allowNull: true
         },
         date_rating: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false
         }
+    },
+    {
+        timestamps: false
     }
     )
 }
