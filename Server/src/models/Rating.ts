@@ -53,10 +53,6 @@ const Rating = (sequelize: Sequelize) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        description_rating: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
         date_rating: {
             type: DataTypes.DATEONLY,
             allowNull: false

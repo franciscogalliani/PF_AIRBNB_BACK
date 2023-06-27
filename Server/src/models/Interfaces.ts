@@ -22,7 +22,6 @@ export interface RatingAttributes {
     communication_rating: number
     price_quality_rating: number
     veracity_rating: number
-    description_rating?: string
     date_rating: Date
 }
 
