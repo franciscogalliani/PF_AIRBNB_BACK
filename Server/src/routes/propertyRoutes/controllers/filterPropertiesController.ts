@@ -181,6 +181,7 @@ const filterPropertiesController = async (filterProperties: Partial<any>, page: 
             ...accessibilityClause,
             ...(max_guests !== undefined ? { max_guests: { [Op.lte]: max_guests } } : {}),
             ...(start_date && end_date ? { start_date: { [Op.lte]: start_date }, end_date: { [Op.gte]: end_date } } : {}),
+            is_active: true
         },
         order: [['price_per_night', order_price === 'des' ? 'DESC' : 'ASC']] as OrderItem[],
     };
