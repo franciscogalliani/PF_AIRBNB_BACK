@@ -27,7 +27,8 @@ const getPropById = async(id: number) => {
             
         ,
         where: {
-            id_property: id
+            id_property: id,
+            is_active: true
         }
     })
     return response;
