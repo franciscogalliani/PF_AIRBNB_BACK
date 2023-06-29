@@ -35,6 +35,7 @@ export interface RentAttributes {
     amount: number
     payment_status: boolean
     payment_date?: Date
+    review_status: boolean
     creation_date: Date
     active : boolean
 }
