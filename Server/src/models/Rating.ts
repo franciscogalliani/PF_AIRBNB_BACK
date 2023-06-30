@@ -59,21 +59,18 @@ const Rating = (sequelize: Sequelize) => {
         },
         is_active: {
             type: DataTypes.BOOLEAN,
-            allowNull: true,
+            allowNull: false,
             defaultValue: true
         },
         is_reported: {
             type: DataTypes.BOOLEAN,
-            allowNull: true,
+            allowNull: false,
             defaultValue: false
         },
         report_reason: {
             type: DataTypes.STRING(200),
             allowNull: true,
-            defaultValue: false
-
         }
-
     },
     {
         timestamps: false

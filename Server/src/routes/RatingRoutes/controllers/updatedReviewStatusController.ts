@@ -8,7 +8,7 @@ const updateReviewStatusController = async (id:number) => {
             {
                 is_active: true,
                 is_reported: true,
-                report_reason: "string"
+                report_reason: ""
               },
             {
                 where: {
