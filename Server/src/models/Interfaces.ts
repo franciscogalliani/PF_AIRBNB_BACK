@@ -23,6 +23,9 @@ export interface RatingAttributes {
     price_quality_rating: number
     veracity_rating: number
     date_rating: Date
+    is_active: boolean
+    is_reported: boolean
+    report_reason: string
 }
 
 export interface RentAttributes {
