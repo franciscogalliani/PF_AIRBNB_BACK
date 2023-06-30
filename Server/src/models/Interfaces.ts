@@ -67,6 +67,12 @@ export interface PropertyAttributes {
     accessibility: boolean
 }
 
+export interface FavoritesAttributes {
+    favorite_id: number
+    id_user: string
+    id_property: number
+}
+
 export interface ServiceAttributes {
     service_id: number
     name: string

@@ -1,7 +1,7 @@
 
 import { DataTypes, Model, Sequelize } from 'sequelize';
 import { RentAttributes } from './Interfaces';
-import { INTEGER } from 'sequelize';
+
 
 interface UserInstance extends Model<RentAttributes>, RentAttributes { }
 
