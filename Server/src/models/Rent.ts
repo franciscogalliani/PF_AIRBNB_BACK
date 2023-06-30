@@ -54,6 +54,11 @@ const Rent = (sequelize: Sequelize) => {
             type: DataTypes.DATE,
             allowNull: true
         },
+        review_status: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false,
+        },
         creation_date: {
             type: DataTypes.DATE,
             allowNull: false
