@@ -7,16 +7,18 @@ import multer from 'multer';
 import sequelize from './db';
 import mercadopago from 'mercadopago'
 
+
 const { Rents, Users, Properties } = sequelize.models
 
 interface CustomError extends Error {
     status?: number;
 }
 
-const server: Express = express();
+const server: Express = express(); // servidor de express
 
 mercadopago.configurations.setAccessToken("TEST-7287226739695489-062410-edcf3670bf07cd7e101763f59926a773-761450099");
 
+server.use(cors());
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));
 server.use(morgan('dev'));
@@ -70,6 +72,7 @@ server.post('/process_payment', (req, res) => {
       .catch(function(error) {
         console.error(error);
       });
+     
   })
 
 export default server;
